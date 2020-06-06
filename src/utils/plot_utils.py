@@ -31,7 +31,12 @@ def compute_metadata_output_avgs(Y, metadata):
     return metadata_unique, output_avgs, output_stds
 
 
-def plot_fit_history(fit_history, save_as=None):
+def plot_fit_history(
+    fit_history,
+    yticks_acc=np.linspace(0, 1, 11),
+    yticks_loss=np.linspace(0, 1, 11),
+    save_as=None,
+):
     matplotlib.rcParams.update({"font.size": 12})
 
     n_epochs = len(fit_history["accuracy"])
@@ -44,7 +49,7 @@ def plot_fit_history(fit_history, save_as=None):
     )
     ax[0].set_xlabel("Epoch")
     ax[0].set_ylabel("Accuracy")
-    ax[0].set_yticks(np.linspace(0, 1, 11))
+    ax[0].set_yticks(yticks_acc)
     ax[0].grid()
     ax[0].legend()
 
@@ -54,7 +59,7 @@ def plot_fit_history(fit_history, save_as=None):
     )
     ax[1].set_xlabel("Epoch")
     ax[1].set_ylabel("Loss")
-    ax[1].set_yticks(np.linspace(0, 0.5, 6))
+    ax[1].set_yticks(yticks_loss)
     ax[1].grid()
 
     plt.tight_layout()

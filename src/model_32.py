@@ -35,6 +35,9 @@ steps_per_epoch = len(data.train.X) // batch_size
 
 if load_model:
     model = keras.models.load_model(os.path.join(model_path, model_name + ".h5"))
+    with open(os.path.join(model_path, "fit_history.pkl"), "rb") as f:
+        fit_history = pickle.load(f)
+
 else:
 
     def conv_block(x, n_layers, n_filters):
@@ -93,10 +96,9 @@ if train_model:
     )
 
     model.save(os.path.join(model_path, model_name + ".h5"))
+    fit_history = fit.history
     with open("fit_history.pkl", "wb") as f:
         pickle.dump(fit.history, f)
-
-    plot_fit_history(fit.history, save_as="fit_history.png")
 
 
 # %%
@@ -105,3 +107,10 @@ if train_model:
 data.analyze_predictions("train", model, plot_misclassified=True)
 data.analyze_predictions("valid", model, plot_misclassified=True)
 data.analyze_predictions("test", model, plot_misclassified=True)
+
+plot_fit_history(
+    fit_history,
+    yticks_acc=np.linspace(0.9, 1, 11),
+    yticks_loss=np.linspace(0, 0.25, 6),
+    save_as="fit_history.png",
+)
