@@ -101,7 +101,10 @@ class Data:
         dataset.accuracy = accuracy
         print("Accuracy: %.5f" % accuracy)
         plot_p_accuracies(
-            dataset.Y_hat, dataset.Y, dataset.p, "accuracies_" + set_label + ".png"
+            dataset.Y_hat,
+            dataset.Y,
+            dataset.p,
+            "accuracies_" + set_label + "_" + str(self.input_shape[0]) + ".png",
         )
 
         print("n samples misclassified: %i" % len(misclassified))
@@ -114,5 +117,11 @@ class Data:
                 self.plot_sample(
                     set_label,
                     sample_index,
-                    save_as="misclassified_" + set_label + "_" + str(sample_index) + ".png",
+                    save_as="misclassified_"
+                    + set_label
+                    + "_"
+                    + str(self.input_shape[0])
+                    + "_"
+                    + str(sample_index)
+                    + ".png",
                 )

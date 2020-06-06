@@ -20,13 +20,13 @@ def compute_metadata_accuracies(Y_hat, Y, metadata):
     return accuracies
 
 
-def compute_metadata_output_avgs(Y, metadata):
+def compute_metadata_output_avgs(Y_hat, metadata):
     metadata_unique = np.unique(metadata)
-    output_avgs = np.zeros((len(metadata_unique), Y.shape[1]))
-    output_stds = np.zeros((len(metadata_unique), Y.shape[1]))
+    output_avgs = np.zeros((len(metadata_unique), Y_hat.shape[1]))
+    output_stds = np.zeros((len(metadata_unique), Y_hat.shape[1]))
     for (i, metadata_bucket) in enumerate(metadata_unique):
-        output_avgs[i] = np.mean(Y[metadata == metadata_bucket], axis=0)
-        output_stds[i] = np.std(Y[metadata == metadata_bucket], axis=0)
+        output_avgs[i] = np.mean(Y_hat[metadata == metadata_bucket], axis=0)
+        output_stds[i] = np.std(Y_hat[metadata == metadata_bucket], axis=0)
 
     return metadata_unique, output_avgs, output_stds
 

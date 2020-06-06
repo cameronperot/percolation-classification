@@ -2,7 +2,7 @@ using NPZ
 include("Lattice2D.jl")
 
 
-data_path = "../../data2"
+data_path = "../../data"
 if !isdir(data_path)
 	mkpath(data_path)
 end
@@ -61,8 +61,82 @@ end
 
 # %% train and test data generation
 
+L = 4
+
+n_samples = 25
+p_occupations = [
+	range(0, stop=0.54, length=55);
+	range(0.55, stop=0.65, length=51);
+	range(0.66, stop=1, length=35)
+	];
+
+@time data_train_test  = generate_data(L, n_samples, p_occupations, as_dict=true);
+size(data_train_test["X"])
+npzwrite(joinpath(data_path, "data_train_test_$(L).npz"), data_train_test)
+
+
+n_samples = 5000
+p_occupations = collect(range(0.5, stop=0.65, step=1e-2));
+
+@time data_transition = generate_data(L, n_samples, p_occupations, extra_sample_rate=1, as_dict=true);
+size(data_transition["X"])
+npzwrite(joinpath(data_path, "data_transition_$(L).npz"), data_transition)
+
+
+# %%
+
+L = 8
+
+n_samples = 50
+p_occupations = [
+	range(0, stop=0.54, length=55);
+	range(0.55, stop=0.65, length=51);
+	range(0.66, stop=1, length=35)
+	];
+
+@time data_train_test  = generate_data(L, n_samples, p_occupations, as_dict=true);
+size(data_train_test["X"])
+npzwrite(joinpath(data_path, "data_train_test_$(L).npz"), data_train_test)
+
+
+n_samples = 5000
+p_occupations = collect(range(0.5, stop=0.65, step=1e-2));
+
+@time data_transition = generate_data(L, n_samples, p_occupations, extra_sample_rate=1, as_dict=true);
+size(data_transition["X"])
+npzwrite(joinpath(data_path, "data_transition_$(L).npz"), data_transition)
+
+
+# %%
+
+
+L = 16
+
+n_samples = 100
+p_occupations = [
+	range(0, stop=0.54, length=55);
+	range(0.55, stop=0.65, length=51);
+	range(0.66, stop=1, length=35)
+	];
+
+@time data_train_test  = generate_data(L, n_samples, p_occupations, as_dict=true);
+size(data_train_test["X"])
+npzwrite(joinpath(data_path, "data_train_test_$(L).npz"), data_train_test)
+
+
+n_samples = 5000
+p_occupations = collect(range(0.5, stop=0.65, step=1e-2));
+
+@time data_transition = generate_data(L, n_samples, p_occupations, extra_sample_rate=1, as_dict=true);
+size(data_transition["X"])
+npzwrite(joinpath(data_path, "data_transition_$(L).npz"), data_transition)
+
+
+# %%
+
 
 L = 32
+
 n_samples = 150
 p_occupations = [
 	range(0, stop=0.54, length=55);
@@ -72,17 +146,12 @@ p_occupations = [
 
 @time data_train_test  = generate_data(L, n_samples, p_occupations, as_dict=true);
 size(data_train_test["X"])
-npzwrite(joinpath(data_path, "data_train_test.npz"), data_train_test)
+npzwrite(joinpath(data_path, "data_train_test_$(L).npz"), data_train_test)
 
 
-# %% transition analysis data generation
-
-
-p_c = 0.5927
-L = 32
 n_samples = 5000
 p_occupations = collect(range(0.5, stop=0.65, step=1e-2));
 
 @time data_transition = generate_data(L, n_samples, p_occupations, extra_sample_rate=1, as_dict=true);
 size(data_transition["X"])
-npzwrite(joinpath(data_path, "data_transition.npz", data_transition)
+npzwrite(joinpath(data_path, "data_transition_$(L).npz"), data_transition)
