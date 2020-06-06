@@ -361,4 +361,4 @@ TSWLatexianTemp*
 .remote-sync.json
 scratch.jl
 
-data/*
+data/*.npz
