@@ -9,7 +9,7 @@ from utils import *
 
 train_model = False
 load_model = True
-model_name = "model_32"
+model_name = "model_16"
 
 data_path = os.path.abspath("../data")
 model_path = os.path.abspath("../artifacts")
@@ -17,7 +17,7 @@ if not os.path.exists(model_path):
     os.makedirs(model_path)
 
 data = Data(
-    os.path.join(data_path, "data_train_test_32.npz"),
+    os.path.join(data_path, "data_train_test_16.npz"),
     use_transpose=True,
     valid_ratio=0.05,
     test_ratio=0.05,
@@ -48,13 +48,10 @@ else:
     def create_model(data):
         x_input = keras.layers.Input(shape=data.input_shape)
 
-        x = conv_block(x_input, 4, 16)
+        x = conv_block(x_input, 4, 24)
         x = keras.layers.MaxPooling2D((2, 2))(x)
 
         x = conv_block(x, 4, 32)
-        x = keras.layers.MaxPooling2D((2, 2))(x)
-
-        x = conv_block(x, 4, 64)
         x = keras.layers.MaxPooling2D((2, 2))(x)
 
         x = keras.layers.GlobalAveragePooling2D()(x)
