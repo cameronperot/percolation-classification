@@ -4,6 +4,7 @@ from tensorflow import keras
 import matplotlib
 import matplotlib.pyplot as plt
 
+from utils import *
 
 data_path = os.path.abspath("../data")
 model_path = os.path.abspath("../artifacts")
